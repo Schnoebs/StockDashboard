@@ -30,3 +30,47 @@ def db_connection():
 
     except pyodbc.Error as ex:
         print(f"An error occurred: {ex}")
+
+
+# Function to insert data into the database
+def db_insert(query):
+    
+    try:
+        connection = pyodbc.connect("Driver={ODBC Driver 18 for SQL Server};"
+                        'Server=Jacobs_PC\SQLEXPRESS;'
+                        "Database=StockData;"
+                        "Trusted_Connection=yes;"
+                        "TrustServerCertificate=yes;")
+        cursor = connection.cursor()
+
+        cursor.execute(query)
+        connection.commit()
+
+        cursor.close()
+        connection.close()
+
+    except pyodbc.Error as ex:
+        print(f"An error occurred: {ex}")
+
+#function to retrieve data from the database
+def get_data(query):
+    # Function to retrieve data from the database
+    try:
+        connection = pyodbc.connect("Driver={ODBC Driver 18 for SQL Server};"
+                        'Server=Jacobs_PC\SQLEXPRESS;'
+                        "Database=StockData;"
+                        "Trusted_Connection=yes;"
+                        "TrustServerCertificate=yes;")
+        cursor = connection.cursor()
+
+        cursor.execute(query)
+        results = cursor.fetchall()
+
+        cursor.close()
+        connection.close()
+
+        return results
+
+    except pyodbc.Error as ex:
+        print(f"An error occurred: {ex}")
+        return None
